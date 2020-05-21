@@ -1,0 +1,79 @@
+package com.github.frimtec.libraries.jpse;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.nio.charset.StandardCharsets.UTF_16LE;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+
+final class WindowsPowerShellExecutor implements PowerShellExecutor {
+
+    private static final String POWER_SHELL_CMD = "powershell.exe";
+    private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
+
+    private final String executionCommand;
+
+    public WindowsPowerShellExecutor() {
+        this(POWER_SHELL_CMD);
+    }
+
+    WindowsPowerShellExecutor(String executionCommand) {
+        this.executionCommand = executionCommand;
+    }
+
+    public ExecutionResult execute(String command) {
+        String encodedCommand = BASE64_ENCODER.encodeToString(command.getBytes(UTF_16LE));
+        return execute(new ProcessBuilder(executionCommand, "-EncodedCommand", encodedCommand));
+    }
+
+    public ExecutionResult execute(Path script, Map<String, String> arguments) {
+        List<String> commandLine = new ArrayList<>(Arrays.asList(executionCommand, "-File", script.toString()));
+        commandLine.addAll(arguments.entrySet()
+                .stream()
+                .flatMap(entry -> Stream.of("-" + entry.getKey(), "\"" + entry.getValue() + "\""))
+                .collect(Collectors.toList()));
+        return execute(new ProcessBuilder(commandLine));
+    }
+
+    private ExecutionResult execute(ProcessBuilder processBuilder) {
+        try {
+            Process process = processBuilder
+                    .start();
+            int returnCode = process.waitFor();
+            if (returnCode != 0) {
+                throw new IOException("Command failed with return code: " + returnCode);
+            }
+            return new ExecutionResultImpl(returnCode, readStream(process.getInputStream()), readStream(process.getErrorStream()));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Wait for process termination interrupted", e);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Powershell cannot be executed", e);
+        }
+    }
+
+    public ExecutionResult execute(InputStream script, Map<String, String> arguments) {
+        try {
+            Path tempFile = Files.createTempFile("java-power-shell-", ".ps1");
+            try {
+                Files.write(tempFile, readStream(script).getBytes(UTF_8), TRUNCATE_EXISTING);
+                return execute(tempFile, arguments);
+            } finally {
+                Files.deleteIfExists(tempFile);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot handle script", e);
+        }
+    }
+
+    private String readStream(InputStream inputStream) {
+        return new BufferedReader(new InputStreamReader(inputStream, UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n"));
+    }
+}
