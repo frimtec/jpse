@@ -17,10 +17,11 @@ class WindowsPowerShellExecutorTest {
     @Test
     void execute() throws IOException {
         // act
-        String output = executor.execute("Write-Host Hello PowerShell!").getResult();
+        ExecutionResult executionResult = executor.execute("Write-Host Hello PowerShell!");
 
         // assert
-        assertThat(output).isEqualTo(osWindows ? "Hello PowerShell!" : "-EncodedCommand VwByAGkAdABlAC0ASABvAHMAdAAgAEgAZQBsAGwAbwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIQA=");
+        assertThat(executionResult.isSuccess()).isTrue();
+        assertThat(executionResult.getStandartOutput()).isEqualTo(osWindows ? "Hello PowerShell!" : "-EncodedCommand VwByAGkAdABlAC0ASABvAHMAdAAgAEgAZQBsAGwAbwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIQA=");
     }
 
     @Test
@@ -29,10 +30,11 @@ class WindowsPowerShellExecutorTest {
         Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
 
         // act
-        String output = executor.execute(Paths.get(".\\src\\test\\resources\\test.ps1"), arguments).getResult();
+        ExecutionResult executionResult = executor.execute(Paths.get(".\\src\\test\\resources\\test.ps1"), arguments);
 
         // assert
-        assertThat(output).isEqualTo(osWindows ? "Hello PowerShell!" : "-File .\\src\\test\\resources\\test.ps1 -name \"PowerShell\"");
+        assertThat(executionResult.isSuccess()).isTrue();
+        assertThat(executionResult.getStandartOutput()).isEqualTo(osWindows ? "Hello PowerShell!" : "-File .\\src\\test\\resources\\test.ps1 -name \"PowerShell\"");
     }
 
     @Test
@@ -41,13 +43,14 @@ class WindowsPowerShellExecutorTest {
         Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
 
         // act
-        String output = executor.execute(WindowsPowerShellExecutorTest.class.getResourceAsStream("/test.ps1"), arguments).getResult();
+        ExecutionResult executionResult = executor.execute(WindowsPowerShellExecutorTest.class.getResourceAsStream("/test.ps1"), arguments);
 
         // assert
+        assertThat(executionResult.isSuccess()).isTrue();
         if (osWindows) {
-            assertThat(output).isEqualTo("Hello PowerShell!");
+            assertThat(executionResult.getStandartOutput()).isEqualTo("Hello PowerShell!");
         } else {
-            assertThat(output).matches("^-File /tmp/java-power-shell-(\\d)*.ps1 -name \"PowerShell\"$");
+            assertThat(executionResult.getStandartOutput()).matches("^-File /tmp/java-power-shell-(\\d)*.ps1 -name \"PowerShell\"$");
         }
     }
 }

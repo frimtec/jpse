@@ -16,9 +16,15 @@ final class WindowsPowerShellExecutor implements PowerShellExecutor {
     private static final String POWER_SHELL_CMD = "powershell.exe";
     private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
 
+    private static final WindowsPowerShellExecutor INSTANCE = new WindowsPowerShellExecutor();
+
     private final String executionCommand;
 
-    public WindowsPowerShellExecutor() {
+    static WindowsPowerShellExecutor instance() {
+        return INSTANCE;
+    }
+
+    WindowsPowerShellExecutor() {
         this(POWER_SHELL_CMD);
     }
 
@@ -42,13 +48,8 @@ final class WindowsPowerShellExecutor implements PowerShellExecutor {
 
     private ExecutionResult execute(ProcessBuilder processBuilder) {
         try {
-            Process process = processBuilder
-                    .start();
-            int returnCode = process.waitFor();
-            if (returnCode != 0) {
-                throw new IOException("Command failed with return code: " + returnCode);
-            }
-            return new ExecutionResultImpl(returnCode, readStream(process.getInputStream()), readStream(process.getErrorStream()));
+            Process process = processBuilder.start();
+            return new ExecutionResultImpl(process.waitFor(), readStream(process.getInputStream()), readStream(process.getErrorStream()));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Wait for process termination interrupted", e);
