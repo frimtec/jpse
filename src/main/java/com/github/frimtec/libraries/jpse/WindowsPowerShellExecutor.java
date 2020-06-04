@@ -17,6 +17,8 @@ class WindowsPowerShellExecutor implements PowerShellExecutor {
     private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
 
     private static final WindowsPowerShellExecutor INSTANCE = new WindowsPowerShellExecutor();
+    private static final int INITIAL_STREAM_BUFFER_SIZE = 1000;
+    private static final String JPSE_GLOBBER_THREAD_NAME = "JPSE-Gobbler";
 
     private final String executionCommand;
 
@@ -68,15 +70,36 @@ class WindowsPowerShellExecutor implements PowerShellExecutor {
     }
 
     private ExecutionResult execute(ProcessBuilder processBuilder) {
+        StringWriter outputStringWriter = new StringWriter(INITIAL_STREAM_BUFFER_SIZE);
+        StringWriter errorStringWriter = new StringWriter(INITIAL_STREAM_BUFFER_SIZE);
+        PrintWriter outputBuffer = new PrintWriter(outputStringWriter);
+        PrintWriter errorBuffer = new PrintWriter(errorStringWriter);
         try {
             Process process = processBuilder.start();
-            return new ExecutionResultImpl(process.waitFor(), readStream(process.getInputStream()), readStream(process.getErrorStream()));
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), outputBuffer::println);
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), errorBuffer::println);
+            List<Thread> threads = Arrays.asList(
+                    new Thread(outputGobbler, JPSE_GLOBBER_THREAD_NAME),
+                    new Thread(errorGobbler, JPSE_GLOBBER_THREAD_NAME)
+            );
+            threads.forEach(thread -> {
+                thread.setDaemon(true);
+                thread.start();
+            });
+            for (StreamGobbler gobbler : Arrays.asList(outputGobbler, errorGobbler)) {
+                gobbler.waitTillFinished();
+            }
+            return new ExecutionResultImpl(process.waitFor(), getOutputFromWriter(outputStringWriter), getOutputFromWriter(errorStringWriter));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Wait for process termination interrupted", e);
         } catch (IOException e) {
             throw new UncheckedIOException("Powershell cannot be executed", e);
         }
+    }
+
+    private String getOutputFromWriter(StringWriter outputStringWriter) {
+        return outputStringWriter.getBuffer().toString().trim();
     }
 
     private String readStream(InputStream inputStream) {
