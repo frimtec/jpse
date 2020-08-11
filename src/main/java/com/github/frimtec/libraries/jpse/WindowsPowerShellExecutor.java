@@ -16,33 +16,37 @@ class WindowsPowerShellExecutor implements PowerShellExecutor {
     private static final String POWER_SHELL_CMD = "powershell.exe";
     private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
 
-    private static final WindowsPowerShellExecutor INSTANCE = new WindowsPowerShellExecutor();
     private static final int INITIAL_STREAM_BUFFER_SIZE = 1000;
     private static final String JPSE_GLOBBER_THREAD_NAME = "JPSE-Gobbler";
 
     private final String executionCommand;
+    private final Path tempPath;
 
-    static WindowsPowerShellExecutor instance() {
-        return INSTANCE;
+    WindowsPowerShellExecutor(Path tempPath) {
+        this(tempPath, POWER_SHELL_CMD);
     }
 
-    WindowsPowerShellExecutor() {
-        this(POWER_SHELL_CMD);
-    }
-
-    WindowsPowerShellExecutor(String executionCommand) {
+    WindowsPowerShellExecutor(Path tempPath, String executionCommand) {
+        this.tempPath = tempPath;
         this.executionCommand = executionCommand;
+        if (tempPath != null && !Files.exists(tempPath)) {
+            try {
+                Files.createDirectories(tempPath);
+            } catch (IOException e) {
+                throw new UncheckedIOException("Cannot create given temp folder: " + tempPath.toAbsolutePath(), e);
+            }
+        }
     }
 
     @Override
     public ExecutionResult execute(String command) {
         String encodedCommand = BASE64_ENCODER.encodeToString(command.getBytes(UTF_16LE));
-        return execute(createProcessBuilder(Arrays.asList(executionCommand, "-EncodedCommand", encodedCommand)));
+        return execute(createProcessBuilder(Arrays.asList(this.executionCommand, "-EncodedCommand", encodedCommand)));
     }
 
     @Override
     public ExecutionResult execute(Path script, Map<String, String> arguments) {
-        List<String> commandLine = new ArrayList<>(Arrays.asList(executionCommand, "-File", script.toString()));
+        List<String> commandLine = new ArrayList<>(Arrays.asList(this.executionCommand, "-File", script.toString()));
         commandLine.addAll(arguments.entrySet()
                 .stream()
                 .flatMap(entry -> Stream.of("-" + entry.getKey(), "\"" + entry.getValue() + "\""))
@@ -53,7 +57,9 @@ class WindowsPowerShellExecutor implements PowerShellExecutor {
     @Override
     public ExecutionResult execute(InputStream script, Map<String, String> arguments) {
         try {
-            Path tempFile = Files.createTempFile("java-power-shell-", ".ps1");
+            String prefix = "java-power-shell-";
+            String suffix = ".ps1";
+            Path tempFile = this.tempPath != null ? Files.createTempFile(this.tempPath, prefix, suffix) : Files.createTempFile(prefix, suffix);
             try {
                 Files.write(tempFile, readStream(script).getBytes(UTF_8), TRUNCATE_EXISTING);
                 return execute(tempFile, arguments);

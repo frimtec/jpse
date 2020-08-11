@@ -12,7 +12,7 @@ API to easily execute PowerShell commands and scripts from Java.
 ## Example
 Call PowerShell commands or scripts like this:
 ```java
-  PowerShellExecutor executor = PowerShellExecutor.instance();
+  PowerShellExecutor executor = PowerShellExecutor.instance(null);
 
   System.out.println("Execute command: ");
   String output = executor.execute("Write-Host Hello PowerShell!").getStandartOutput();
@@ -37,6 +37,6 @@ In Maven just add the following dependency to your pom.xml:
       <dependency>
         <groupId>com.github.frimtec</groupId>
         <artifactId>jpse</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
       </dependency>
 ```

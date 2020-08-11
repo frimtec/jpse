@@ -22,7 +22,7 @@ public interface PowerShellExecutor {
     /**
      * Executes a PowerShell script provided as a file path.
      *
-     * @param script file path to the script to execute
+     * @param script    file path to the script to execute
      * @param arguments map of named arguments for the script
      * @return execution result
      */
@@ -31,14 +31,20 @@ public interface PowerShellExecutor {
     /**
      * Executes a PowerShell script provided as an input stream.
      *
-     * @param script input stream of the script to execute
+     * @param script    input stream of the script to execute
      * @param arguments map of named arguments for the script
      * @return execution result
      */
     ExecutionResult execute(InputStream script, Map<String, String> arguments);
 
-    static PowerShellExecutor instance() {
+    /**
+     * Creates a power shell executor.
+     *
+     * @param tempPath path to the temp directory where JPSE can store temporary scripts to be executes or null if default temp directory is fine
+     * @return power shell executor
+     */
+    static PowerShellExecutor instance(Path tempPath) {
         String osName = System.getProperty("os.name");
-        return osName.toLowerCase().startsWith("windows") ? WindowsPowerShellExecutor.instance() : new UnsupportedOsPowerShellExecutor(osName);
+        return osName.toLowerCase().startsWith("windows") ? new WindowsPowerShellExecutor(tempPath) : new UnsupportedOsPowerShellExecutor(osName);
     }
 }

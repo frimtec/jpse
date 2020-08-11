@@ -16,14 +16,15 @@ final class StreamGobbler implements Runnable {
         this.consumeInputLine = consumeInputLine;
     }
 
+    @Override
     public void run() {
-        new BufferedReader(new InputStreamReader(inputStream))
+        new BufferedReader(new InputStreamReader(this.inputStream))
                 .lines()
-                .forEach(consumeInputLine);
+                .forEach(this.consumeInputLine);
         this.finishedLatch.countDown();
     }
 
     public void waitTillFinished() throws InterruptedException {
-        finishedLatch.await();
+        this.finishedLatch.await();
     }
 }

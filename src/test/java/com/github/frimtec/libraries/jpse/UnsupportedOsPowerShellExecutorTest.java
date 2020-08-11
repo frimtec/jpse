@@ -14,20 +14,20 @@ class UnsupportedOsPowerShellExecutorTest {
 
     @Test
     void execute() {
-        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> executor.execute("command"));
-        assertThat(exception.getMessage()).isEqualTo("Not suported on OS Other");
+        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> this.executor.execute("command"));
+        assertThat(exception.getMessage()).isEqualTo("Not supported on OS Other");
     }
 
     @Test
     void testExecuteForScriptFromFile() {
-        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> executor.execute(Paths.get("file.ps1"), Collections.emptyMap()));
-        assertThat(exception.getMessage()).isEqualTo("Not suported on OS Other");
+        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> this.executor.execute(Paths.get("file.ps1"), Collections.emptyMap()));
+        assertThat(exception.getMessage()).isEqualTo("Not supported on OS Other");
     }
 
     @Test
     void testExecuteForScriptFromClasspath() {
-        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> executor.execute(UnsupportedOsPowerShellExecutorTest.class.getResourceAsStream("/test.ps1"), Collections.emptyMap()));
-        assertThat(exception.getMessage()).isEqualTo("Not suported on OS Other");
+        UnsupportedOperationException exception = assertThrows(UnsupportedOperationException.class, () -> this.executor.execute(UnsupportedOsPowerShellExecutorTest.class.getResourceAsStream("/test.ps1"), Collections.emptyMap()));
+        assertThat(exception.getMessage()).isEqualTo("Not supported on OS Other");
     }
 }
 

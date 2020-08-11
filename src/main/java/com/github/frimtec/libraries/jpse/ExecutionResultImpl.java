@@ -14,7 +14,7 @@ final class ExecutionResultImpl implements ExecutionResult {
 
     @Override
     public boolean isSuccess() {
-        return returnCode == 0;
+        return this.returnCode == 0;
     }
 
     @Override

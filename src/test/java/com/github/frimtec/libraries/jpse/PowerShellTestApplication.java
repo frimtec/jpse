@@ -11,7 +11,7 @@ import java.util.Map;
 class PowerShellTestApplication {
 
     public static void main(String[] args) throws IOException {
-        PowerShellExecutor executor = PowerShellExecutor.instance();
+        PowerShellExecutor executor = PowerShellExecutor.instance(null);
 
         System.out.println("Execute command: ");
         String output = executor.execute("Write-Host Hello PowerShell!").getStandartOutput();

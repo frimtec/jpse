@@ -13,16 +13,16 @@ final class UnsupportedOsPowerShellExecutor implements PowerShellExecutor {
 
     @Override
     public ExecutionResult execute(String command) {
-        throw new UnsupportedOperationException("Not suported on OS " + osName);
+        throw new UnsupportedOperationException("Not supported on OS " + this.osName);
     }
 
     @Override
     public ExecutionResult execute(Path script, Map<String, String> arguments) {
-        throw new UnsupportedOperationException("Not suported on OS " + osName);
+        throw new UnsupportedOperationException("Not supported on OS " + this.osName);
     }
 
     @Override
     public ExecutionResult execute(InputStream script, Map<String, String> arguments) {
-        throw new UnsupportedOperationException("Not suported on OS " + osName);
+        throw new UnsupportedOperationException("Not supported on OS " + this.osName);
     }
 }
