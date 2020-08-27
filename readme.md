@@ -20,11 +20,11 @@ Call PowerShell commands or scripts like this:
 
   Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
 
-  System.out.println("Execute scipt as file: ");
+  System.out.println("Execute script as file: ");
   output = executor.execute(Paths.get(".\\src\\test\\resources\\test.ps1"), arguments).getStandartOutput();
   System.out.println(" output = " + output);
 
-  System.out.println("Execute scipt from classpath: ");
+  System.out.println("Execute script from classpath: ");
   output = executor.execute(PowerShellTestApplication.class.getResourceAsStream("/test.ps1"), arguments).getStandartOutput();
   System.out.println(" output = " + output);
 ```
