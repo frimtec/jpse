@@ -21,11 +21,11 @@ public interface ExecutionResult {
     int getReturnCode();
 
     /**
-     * Returns the executions standart output.
+     * Returns the executions standard output.
      *
-     * @return standart output
+     * @return standard output
      */
-    String getStandartOutput();
+    String getStandardOutput();
 
     /**
      * Returns the executions error output.

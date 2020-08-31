@@ -8,7 +8,7 @@ class PowerShellExecutorTest {
 
     @Test
     void instance() {
-        PowerShellExecutor instance = PowerShellExecutor.instance(null);
+        PowerShellExecutor instance = PowerShellExecutor.instance();
         assertThat(instance).isNotNull();
     }
 }

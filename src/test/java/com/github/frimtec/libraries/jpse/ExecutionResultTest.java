@@ -46,12 +46,12 @@ class ExecutionResultTest {
     }
 
     @Test
-    void getStandartOutput() {
+    void getStandardOutput() {
         // arrange
         ExecutionResult executionResult = new ExecutionResultImpl(2, "OUTPUT", "ERROR");
 
         // act
-        String output = executionResult.getStandartOutput();
+        String output = executionResult.getStandardOutput();
 
         // assert
         assertThat(output).isEqualTo("OUTPUT");

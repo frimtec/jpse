@@ -5,7 +5,6 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,30 +23,30 @@ class WindowsPowerShellExecutorTest {
     private final PowerShellExecutor executor = this.osWindows ? new WindowsPowerShellExecutor(null) : new WindowsPowerShellExecutor(null, "echo");
 
     @Test
-    void executeForSuccess() throws IOException {
+    void executeForSuccess() {
         // act
         ExecutionResult executionResult = this.executor.execute("Write-Host Hello PowerShell!");
 
         // assert
         assertThat(executionResult.isSuccess()).isTrue();
-        assertThat(executionResult.getStandartOutput()).isEqualTo(this.osWindows ? "Hello PowerShell!" : "-EncodedCommand VwByAGkAdABlAC0ASABvAHMAdAAgAEgAZQBsAGwAbwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIQA=");
+        assertThat(executionResult.getStandardOutput()).isEqualTo(this.osWindows ? "Hello PowerShell!" : "-EncodedCommand VwByAGkAdABlAC0ASABvAHMAdAAgAEgAZQBsAGwAbwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIQA=");
     }
 
     @Test
     @EnabledOnOs(OS.WINDOWS)
-    void executeForFailure() throws IOException {
+    void executeForFailure() {
         // act
         ExecutionResult executionResult = this.executor.execute("Write-Error Problem");
 
         // assert
         assertThat(executionResult.isSuccess()).isFalse();
         assertThat(executionResult.getReturnCode()).isEqualTo(1);
-        assertThat(executionResult.getStandartOutput()).isEmpty();
+        assertThat(executionResult.getStandardOutput()).isEmpty();
         assertThat(executionResult.getErrorOutput()).contains("Problem");
     }
 
     @Test
-    void executeForInterruptThrowsException() throws IOException {
+    void executeForInterruptThrowsException() {
         // arrange
         Thread mainThread = Thread.currentThread();
         new Thread(() -> {
@@ -59,7 +58,6 @@ class WindowsPowerShellExecutorTest {
             mainThread.interrupt();
         }).start();
 
-        //noinspection MethodDoesntCallSuperMethod
         PowerShellExecutor interruptedExecutor = this.osWindows ? this.executor : new WindowsPowerShellExecutor(null, "") {
             @Override
             protected ProcessBuilder createProcessBuilder(List<String> commandLine) {
@@ -74,7 +72,7 @@ class WindowsPowerShellExecutorTest {
     }
 
     @Test
-    void executeForBadPowerShellExeThrowsException() throws IOException {
+    void executeForBadPowerShellExeThrowsException() {
         // arrange
         PowerShellExecutor errorExecutor = new WindowsPowerShellExecutor(null, "unknown_command.exe");
 
@@ -84,7 +82,7 @@ class WindowsPowerShellExecutorTest {
     }
 
     @Test
-    void testExecuteForScriptFromFile() throws IOException {
+    void testExecuteForScriptFromFile() {
         // arrange
         Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
 
@@ -93,11 +91,11 @@ class WindowsPowerShellExecutorTest {
 
         // assert
         assertThat(executionResult.isSuccess()).isTrue();
-        assertThat(executionResult.getStandartOutput()).isEqualTo(this.osWindows ? "Hello PowerShell!" : "-File .\\src\\test\\resources\\test.ps1 -name \"PowerShell\"");
+        assertThat(executionResult.getStandardOutput()).isEqualTo(this.osWindows ? "Hello PowerShell!" : "-File .\\src\\test\\resources\\test.ps1 -name \"PowerShell\"");
     }
 
     @Test
-    void testExecuteForScriptFromClasspath() throws IOException {
+    void testExecuteForScriptFromClasspath() {
         // arrange
         Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
 
@@ -107,19 +105,19 @@ class WindowsPowerShellExecutorTest {
         // assert
         assertThat(executionResult.isSuccess()).isTrue();
         if (this.osWindows) {
-            assertThat(executionResult.getStandartOutput()).isEqualTo("Hello PowerShell!");
+            assertThat(executionResult.getStandardOutput()).isEqualTo("Hello PowerShell!");
         } else {
-            assertThat(executionResult.getStandartOutput()).matches("^-File /tmp/java-power-shell-(\\d)*.ps1 -name \"PowerShell\"$");
+            assertThat(executionResult.getStandardOutput()).matches("^-File /tmp/java-power-shell-(\\d)*.ps1 -name \"PowerShell\"$");
         }
     }
 
     @Test
-    void createForNonExistingTempFolderExpectsFolderCreated(@TempDir Path tempBaseFolder) throws IOException {
+    void createForNonExistingTempFolderExpectsFolderCreated(@TempDir Path tempBaseFolder) {
         // arrange
         Path tempPath = tempBaseFolder.resolve("jpse");
 
         // act
-        PowerShellExecutor executor = new WindowsPowerShellExecutor(tempPath);
+        new WindowsPowerShellExecutor(tempPath);
 
         // assert
         assertThat(Files.exists(tempPath)).isTrue();

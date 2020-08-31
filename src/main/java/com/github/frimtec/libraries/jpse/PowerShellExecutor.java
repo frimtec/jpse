@@ -38,9 +38,17 @@ public interface PowerShellExecutor {
     ExecutionResult execute(InputStream script, Map<String, String> arguments);
 
     /**
-     * Creates a power shell executor.
+     * Creates a power shell executor using the default temp path to create and execute temporary scripts.
+     * @return power shell executor
+     */
+    static PowerShellExecutor instance() {
+        return instance(null);
+    }
+
+    /**
+     * Creates a power shell executor using the given temp path to create and execute temporary scripts.
      *
-     * @param tempPath path to the temp directory where JPSE can store temporary scripts to be executes or null if default temp directory is fine
+     * @param tempPath path to the temp directory where JPSE can store temporary scripts to be executed
      * @return power shell executor
      */
     static PowerShellExecutor instance(Path tempPath) {

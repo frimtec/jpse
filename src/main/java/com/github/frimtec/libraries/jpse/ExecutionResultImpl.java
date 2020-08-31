@@ -18,7 +18,7 @@ final class ExecutionResultImpl implements ExecutionResult {
     }
 
     @Override
-    public String getStandartOutput() {
+    public String getStandardOutput() {
         return this.result;
     }
 
