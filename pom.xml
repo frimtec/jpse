@@ -4,7 +4,7 @@
 
     <groupId>com.github.frimtec</groupId>
     <artifactId>jpse</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
 
     <name>jpse</name>
     <description>
@@ -38,7 +38,7 @@
         <developerConnection>scm:git:git@github.com:frimtec/jpse.git
         </developerConnection>
         <url>${project.url}</url>
-        <tag>1.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
