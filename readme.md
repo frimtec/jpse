@@ -1,8 +1,9 @@
 # JPSE - Java PowerShell Executor
-[![Build Status](https://travis-ci.com/frimtec/jpse.svg?branch=master)](https://travis-ci.com/frimtec/jpse) 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse) 
-[![Coverage Status](https://coveralls.io/repos/github/frimtec/jpse/badge.svg?branch=master)](https://coveralls.io/github/frimtec/jpse?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse)
+[![codecov](https://codecov.io/gh/frimtec/jpse/branch/master/graph/badge.svg?token=WHFQYWA0EA)](https://codecov.io/gh/frimtec/jpse)
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+[![Build](https://github.com/frimtec/jpse/workflows/Build/badge.svg)](https://github.com/frimtec/jpse/actions?query=workflow%3ABuild)
 
 API to easily execute PowerShell commands and scripts from Java.
  
