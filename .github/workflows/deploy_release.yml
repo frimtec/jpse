@@ -5,7 +5,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
@@ -30,4 +30,30 @@ jobs:
           gpg_passphrase: ${{ secrets.gpg_passphrase }}
           nexus_username: ${{ secrets.nexus_username }}
           nexus_password: ${{ secrets.nexus_password }}
+
+  update-read-me:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+          ref: 'master'
+
+      - name: Update readme.md
+        run: |
+          sed -i 's/<version>.*<\/version>/<version>${{ steps.get_version.outputs.VERSION }}<\/version>/g' readme.md
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add readme.md
+          git commit -m "Update release version to ${{ steps.get_version.outputs.VERSION }}"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'master'
 
