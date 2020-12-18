@@ -10,6 +10,7 @@ API to easily execute PowerShell commands and scripts from Java.
  
 ## Supported platforms
 * Windows
+* Linux (with installed PowerShell)
 
 ## Example
 Call PowerShell commands or scripts like this:
