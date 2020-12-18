@@ -18,12 +18,14 @@ abstract class AbstractPowerShellExecutor implements PowerShellExecutor {
     private static final int INITIAL_STREAM_BUFFER_SIZE = 1000;
     private static final String JPSE_GLOBBER_THREAD_NAME = "JPSE-Gobbler";
 
-    private final String executionCommand;
     private final Path tempPath;
+    private final String executionCommand;
+    private final String paramQuote;
 
-    AbstractPowerShellExecutor(Path tempPath, String executionCommand) {
+    AbstractPowerShellExecutor(Path tempPath, String executionCommand, String paramQuote) {
         this.tempPath = tempPath;
         this.executionCommand = executionCommand;
+        this.paramQuote = paramQuote;
         if (tempPath != null && !Files.exists(tempPath)) {
             try {
                 Files.createDirectories(tempPath);
@@ -44,7 +46,7 @@ abstract class AbstractPowerShellExecutor implements PowerShellExecutor {
         List<String> commandLine = new ArrayList<>(Arrays.asList(this.executionCommand, "-File", script.toString()));
         commandLine.addAll(arguments.entrySet()
                 .stream()
-                .flatMap(entry -> Stream.of("-" + entry.getKey(), "\"" + entry.getValue() + "\""))
+                .flatMap(entry -> Stream.of("-" + entry.getKey(), this.paramQuote + entry.getValue() + this.paramQuote))
                 .collect(Collectors.toList()));
         return execute(createProcessBuilder(commandLine));
     }
