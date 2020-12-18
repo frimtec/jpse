@@ -3,6 +3,7 @@ package com.github.frimtec.libraries.jpse;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Executor for PowerShell commands and scripts.
@@ -38,7 +39,16 @@ public interface PowerShellExecutor {
     ExecutionResult execute(InputStream script, Map<String, String> arguments);
 
     /**
+     * Returns the version of the available power shell environment.
+     *
+     * @return version of the available power shell environment or empty if powershell is not available
+     * @since 1.3.0
+     */
+    Optional<Version> version();
+
+    /**
      * Creates a power shell executor using the default temp path to create and execute temporary scripts.
+     *
      * @return power shell executor
      */
     static PowerShellExecutor instance() {
@@ -52,7 +62,13 @@ public interface PowerShellExecutor {
      * @return power shell executor
      */
     static PowerShellExecutor instance(Path tempPath) {
-        String osName = System.getProperty("os.name");
-        return osName.toLowerCase().startsWith("windows") ? new WindowsPowerShellExecutor(tempPath) : new UnsupportedOsPowerShellExecutor(osName);
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.startsWith("win")) {
+            return new WindowsPowerShellExecutor(tempPath);
+        } else if (osName.contains("nix") || osName.contains("nux")) {
+            return new LinuxPowerShellExecutor(tempPath);
+        } else {
+            return new UnsupportedOsPowerShellExecutor(osName);
+        }
     }
 }
