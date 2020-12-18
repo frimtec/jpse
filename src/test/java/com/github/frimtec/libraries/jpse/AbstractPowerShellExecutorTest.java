@@ -86,14 +86,14 @@ class AbstractPowerShellExecutorTest {
     @Test
     void testExecuteForScriptFromClasspath() {
         // arrange
-        Map<String, String> arguments = Collections.singletonMap("name", "PowerShell");
+        Map<String, String> arguments = Collections.singletonMap("name", "Power - 'Shell'");
 
         // act
         ExecutionResult executionResult = this.executor.execute(AbstractPowerShellExecutorTest.class.getResourceAsStream("/test.ps1"), arguments);
 
         // assert
         assertThat(executionResult.isSuccess()).isTrue();
-        assertThat(executionResult.getStandardOutput()).isEqualTo("Hello PowerShell!");
+        assertThat(executionResult.getStandardOutput()).isEqualTo("Hello Power - 'Shell'!");
     }
 
     @Test
