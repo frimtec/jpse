@@ -21,7 +21,7 @@
     </licenses>
     <issueManagement>
         <system>github</system>
-        <url>${project.url}/issues</url>
+        <url>https://github.com/frimtec/jpse/issues</url>
     </issueManagement>
 
     <developers>
@@ -37,7 +37,7 @@
         <connection>scm:git:git@github.com:frimtec/jpse.git</connection>
         <developerConnection>scm:git:git@github.com:frimtec/jpse.git
         </developerConnection>
-        <url>${project.url}</url>
+        <url>https://github.com/frimtec/jpse</url>
         <tag>HEAD</tag>
     </scm>
 

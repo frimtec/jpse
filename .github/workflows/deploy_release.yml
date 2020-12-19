@@ -49,16 +49,16 @@ jobs:
         run: |
           git checkout master
 
-      - name: Update readme.md
+      - name: Update README.md
         run: |
-          sed -i 's/<version>.*<\/version>/<version>${{ steps.get_version.outputs.VERSION }}<\/version>/g' readme.md
+          sed -i 's/<version>.*<\/version>/<version>${{ steps.get_version.outputs.VERSION }}<\/version>/g' README.md
 
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add readme.md
+          git add README.md
           git commit -m "Update release version to ${{ steps.get_version.outputs.VERSION }}"
       - name: Push changes
         uses: ad-m/github-push-action@master
