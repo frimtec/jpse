@@ -88,9 +88,7 @@ abstract class AbstractPowerShellExecutor implements PowerShellExecutor {
     private ExecutionResult execute(ProcessBuilder processBuilder) {
         StringWriter outputStringWriter = new StringWriter(INITIAL_STREAM_BUFFER_SIZE);
         StringWriter errorStringWriter = new StringWriter(INITIAL_STREAM_BUFFER_SIZE);
-        PrintWriter outputBuffer = new PrintWriter(outputStringWriter);
-        PrintWriter errorBuffer = new PrintWriter(errorStringWriter);
-        try {
+        try (PrintWriter outputBuffer = new PrintWriter(outputStringWriter); PrintWriter errorBuffer = new PrintWriter(errorStringWriter)) {
             Process process = processBuilder.start();
             StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), outputBuffer::println);
             StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), errorBuffer::println);
