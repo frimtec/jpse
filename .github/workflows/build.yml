@@ -26,3 +26,14 @@ jobs:
       run: mvn jacoco:prepare-agent test jacoco:report
 
     - uses: codecov/codecov-action@v2.1.0
+
+    # Run Qodana inspections
+    - name: Qodana - Code Inspection
+      uses: JetBrains/qodana-action@v4.2.5
+
+    # Collect Qodana Result
+    - name: Collect Qodana Result
+      uses: actions/upload-artifact@v2
+      with:
+        name: qodana-result
+        path: ${{ github.workspace }}/qodana
