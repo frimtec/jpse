@@ -1,10 +1,13 @@
 # JPSE - Java PowerShell Executor
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse)
-[![codecov](https://codecov.io/gh/frimtec/jpse/branch/master/graph/badge.svg?token=WHFQYWA0EA)](https://codecov.io/gh/frimtec/jpse)
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[![Build](https://github.com/frimtec/jpse/workflows/Build/badge.svg)](https://github.com/frimtec/jpse/actions?query=workflow%3ABuild)
-[![Deploy release](https://github.com/frimtec/jpse/workflows/Deploy%20release/badge.svg)](https://github.com/frimtec/jpse/actions?query=workflow%3A%22Deploy+release%22)
+[![Maven Central][maven-central-shield]][maven-central]
+
+![Project Maintenance][maintenance-shield]
+[![Code Coverage][codecov-shield]][codecov]
+[![License][license-shield]][license]
+
+[![Build Status][build-status-shield]][build-status]
+[![Deploy Status][deploy-status-shield]][deploy-status]
 
 API to easily execute PowerShell commands and scripts from Java.
  
@@ -35,7 +38,7 @@ System.out.println(" output = " + output);
 ```
 
 ## Add dependency
-To use jpse in your project you can add the dependecy from [maven central](https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse) to your software project management tool:
+To use jpse in your project you can add the dependecy from [maven central][maven-central] to your software project management tool:
 
 In Maven just add the following dependency to your pom.xml:
 ```xml
@@ -45,3 +48,15 @@ In Maven just add the following dependency to your pom.xml:
         <version>1.3.2</version>
       </dependency>
 ```
+
+[maven-central-shield]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg
+[maven-central]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
+[license-shield]: https://img.shields.io/github/license/frimtec/teamcity-inspection-notification-plugin.svg
+[license]: https://opensource.org/licenses/Apache-2.0
+[codecov-shield]: https://codecov.io/gh/frimtec/jpse/branch/master/graph/badge.svg?token=WHFQYWA0EA
+[codecov]: https://codecov.io/gh/frimtec/jpse
+[build-status-shield]: https://github.com/frimtec/jpse/workflows/Build/badge.svg
+[build-status]: https://github.com/frimtec/jpse/actions?query=workflow%3ABuild
+[deploy-status-shield]: https://github.com/frimtec/jpse/workflows/Deploy%20release/badge.svg
+[deploy-status]: https://github.com/frimtec/jpse/actions?query=workflow%3A%22Deploy+release%22
