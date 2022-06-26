@@ -9,3 +9,5 @@ jetbrains:
   intellij:
     plugins:
       - com.intellij.plugin.adernov.powershell
+    prebuilds:
+      version: both
