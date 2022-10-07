@@ -8,7 +8,7 @@
 
     <name>jpse</name>
     <description>
-        JPSE (Java PowerShell Executor) - Library to easialy execute Powershell scripts and commands from Java.
+        JPSE (Java PowerShell Executor) - Library to easily execute Powershell scripts and commands from Java.
     </description>
     <url>https://github.com/frimtec/jpse</url>
 
