@@ -8,7 +8,7 @@
 
     <name>jpse</name>
     <description>
-        JPSE (Java PowerShell Executor) - Library to easialy execute Powershell scripts and commands from Java.
+        JPSE (Java PowerShell Executor) - Library to easily execute Powershell scripts and commands from Java.
     </description>
     <url>https://github.com/frimtec/jpse</url>
 
@@ -59,7 +59,7 @@
 
         <junit.jupiter.version>5.9.0</junit.jupiter.version>
         <assertj-core.version>3.23.1</assertj-core.version>
-        <mockito-core.version>4.7.0</mockito-core.version>
+        <mockito-core.version>4.8.0</mockito-core.version>
 
         <maven-assembly-plugin.version>3.4.2</maven-assembly-plugin.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
