@@ -14,6 +14,7 @@ API to easily execute PowerShell commands and scripts from Java.
 ## Supported platforms
 * Windows
 * Linux (with installed PowerShell)
+* MacOS (with installed PowerShell)
 
 ## Example
 Call PowerShell commands or scripts like this:
@@ -38,7 +39,7 @@ System.out.println(" output = " + output);
 ```
 
 ## Add dependency
-To use jpse in your project you can add the dependecy from [maven central][maven-central] to your software project management tool:
+To use jpse in your project you can add the dependency from [maven central][maven-central] to your software project management tool:
 
 In Maven just add the following dependency to your pom.xml:
 ```xml

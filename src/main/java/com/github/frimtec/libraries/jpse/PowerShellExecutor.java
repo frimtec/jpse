@@ -65,7 +65,7 @@ public interface PowerShellExecutor {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.startsWith("win")) {
             return new WindowsPowerShellExecutor(tempPath);
-        } else if (osName.contains("nix") || osName.contains("nux")) {
+        } else if (osName.contains("nix") || osName.contains("nux") || osName.contains("mac")) {
             return new LinuxPowerShellExecutor(tempPath);
         } else {
             return new UnsupportedOsPowerShellExecutor(osName);
