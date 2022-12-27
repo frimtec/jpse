@@ -54,7 +54,7 @@ In Maven just add the following dependency to your pom.xml:
 [gitpod]: https://gitpod.io/from-referrer/
 [maven-central-shield]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg
 [maven-central]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2022.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
 [license-shield]: https://img.shields.io/github/license/frimtec/jpse.svg
 [license]: https://opensource.org/licenses/Apache-2.0
 [codecov-shield]: https://codecov.io/gh/frimtec/jpse/branch/master/graph/badge.svg?token=WHFQYWA0EA
