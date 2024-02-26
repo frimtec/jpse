@@ -29,7 +29,7 @@ jobs:
     - name: Test coverage Report
       run: mvn jacoco:prepare-agent test jacoco:report
 
-    - uses: codecov/codecov-action@v4.0.1
+    - uses: codecov/codecov-action@v4.0.2
 
   # Run Qodana inspections and provide report
   inspectCode:
