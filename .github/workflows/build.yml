@@ -25,6 +25,6 @@ jobs:
     - name: Test coverage Report
       run: mvn jacoco:prepare-agent test jacoco:report
 
-    - uses: codecov/codecov-action@v5.3.1
+    - uses: codecov/codecov-action@v5.4.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
