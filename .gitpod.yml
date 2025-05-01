@@ -1,0 +1,11 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Build
+    init: mvn clean install
+
+jetbrains:
+  intellij:
+    plugins:
+      - com.intellij.plugin.adernov.powershell

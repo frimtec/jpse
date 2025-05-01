@@ -1,5 +1,4 @@
-# JPSE - Java PowerShell Executor
-[![setup automated] [codespaces-shield]][codespaces] 
+# JPSE - Java PowerShell Executor [![setup automated][gitpod-shield]][gitpod]
 
 [![Maven Central][maven-central-shield]][maven-central]
 [![License][license-shield]][license]
@@ -51,8 +50,8 @@ In Maven just add the following dependency to your pom.xml:
       </dependency>
 ```
 
-[codespaces-shield]: https://github.com/codespaces/badge.svg
-[codespaces]: https://codespaces.new/frimtec/jpse
+[gitpod-shield]: https://img.shields.io/badge/Gitpod-ready_to_code-orange?logo=gitpod
+[gitpod]: https://gitpod.io/from-referrer/
 [maven-central-shield]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse/badge.svg
 [maven-central]: https://maven-badges.herokuapp.com/maven-central/com.github.frimtec/jpse
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
