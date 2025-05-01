@@ -1,5 +1,5 @@
 # JPSE - Java PowerShell Executor
-[![setup automated][codespaces-shield]][codespaces] 
+[![setup automated] [codespaces-shield]][codespaces] 
 
 [![Maven Central][maven-central-shield]][maven-central]
 [![License][license-shield]][license]
