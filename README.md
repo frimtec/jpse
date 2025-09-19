@@ -17,6 +17,7 @@ API to easily execute PowerShell commands and scripts from Java.
 * MacOS (with installed PowerShell)
 
 ## Compatible JDK's
+* 8
 * 11
 * 17
 * 21

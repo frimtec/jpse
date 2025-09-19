@@ -111,9 +111,7 @@ class AbstractPowerShellExecutorTest {
     @Test
     void version() {
         // act
-        Version version = this.executor.version().orElseThrow(() -> {
-            throw new AssertionError("result expected");
-        });
+        Version version = this.executor.version().orElseThrow(() -> new AssertionError("result expected"));
 
         // assert
         assertThat(version.toString()).matches("(\\d+)\\.(\\d+)");
