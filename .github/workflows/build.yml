@@ -10,14 +10,17 @@ jobs:
   build:
 
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java-version: [11, 17, 21, 25]
 
     steps:
     - uses: actions/checkout@v5
-    - name: Set up JDK 21
+    - name: Set up JDK ${{ matrix.java-version }}
       uses: actions/setup-java@v5
       with:
         distribution: zulu
-        java-version: 21
+        java-version: ${{ matrix.java-version }}
 
     - name: Build with Maven
       run: mvn clean install
