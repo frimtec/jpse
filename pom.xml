@@ -59,7 +59,7 @@
 
         <junit.jupiter.version>5.13.4</junit.jupiter.version>
         <assertj-core.version>3.27.4</assertj-core.version>
-        <mockito-core.version>5.19.0</mockito-core.version>
+        <mockito-core.version>5.20.0</mockito-core.version>
 
         <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
