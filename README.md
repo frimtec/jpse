@@ -51,7 +51,7 @@ In Maven just add the following dependency to your pom.xml:
       <dependency>
         <groupId>com.github.frimtec</groupId>
         <artifactId>jpse</artifactId>
-        <version>1.3.5</version>
+        <version>1.4.0</version>
       </dependency>
 ```
 
