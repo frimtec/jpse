@@ -57,7 +57,7 @@ In Maven just add the following dependency to your pom.xml:
 
 [maven-central-shield]: https://img.shields.io/maven-central/v/com.github.frimtec/jpse
 [maven-central]: https://central.sonatype.com/artifact/com.github.frimtec/jpse
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
 [license-shield]: https://img.shields.io/github/license/frimtec/jpse.svg
 [license]: https://opensource.org/licenses/Apache-2.0
 [codecov-shield]: https://codecov.io/gh/frimtec/jpse/branch/master/graph/badge.svg?token=WHFQYWA0EA
